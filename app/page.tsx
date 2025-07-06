@@ -18,8 +18,16 @@ export default function Home() {
   const [isRevealed, setIsRevealed] = useState(false);
   const [randomPosition, setRandomPosition] = useState({ x: 50, y: 50 });
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [isClient, setIsClient] = useState(false);
+
+  // This ensures we only run on the client
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   useEffect(() => {
+    if (!isClient) return;
+    
     setIsRevealed(false);
     setCurrentZoom(15);
     setImageLoaded(false);
@@ -27,10 +35,10 @@ export default function Home() {
       x: 20 + Math.random() * 60,
       y: 20 + Math.random() * 60
     });
-  }, [currentImageIndex]);
+  }, [currentImageIndex, isClient]);
 
   const getClipPath = () => {
-    if (isRevealed || !imageLoaded) return 'none';
+    if (isRevealed || !imageLoaded || !isClient) return 'none';
     const size = currentZoom;
     const halfSize = size / 2;
     const left = Math.max(0, randomPosition.x - halfSize);
@@ -39,6 +47,15 @@ export default function Home() {
     const bottom = Math.min(100, randomPosition.y + halfSize);
     return `polygon(${left}% ${top}%, ${right}% ${top}%, ${right}% ${bottom}%, ${left}% ${bottom}%)`;
   };
+
+  // Don't render until client-side
+  if (!isClient) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 flex items-center justify-center">
+        <div className="text-white">Loading...</div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 flex items-center justify-center p-4">

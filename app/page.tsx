@@ -4,21 +4,21 @@ import { useState, useEffect } from 'react';
 
 export default function Home() {
   // Just replace these URLs with your image URLs
-const images = [
-  { 
-    url: '/images/image1.jpg',  // Note: starts with / not ./
-    caption: 'First Date' 
-  },
-  { 
-    url: '/images/image2.jpg', 
-    caption: 'My 500 lbs Life' 
-  },
-  { 
-    url: '/images/image3.jpg', 
-    caption: 'Beach Day' 
-  },
-  // ... more images
-];
+  const images = [
+    { 
+      url: '/images/image1.jpg',  // Note: starts with / not ./
+      caption: 'First Date' 
+    },
+    { 
+      url: '/images/image2.jpg', 
+      caption: 'My 500 lbs Life' 
+    },
+    { 
+      url: '/images/image3.jpg', 
+      caption: 'Beach Day' 
+    },
+    // ... more images
+  ];
 
   const [mounted, setMounted] = useState(false);
   const [authenticated, setAuthenticated] = useState(false);
@@ -29,7 +29,6 @@ const images = [
   const [isRevealed, setIsRevealed] = useState(false);
   const [randomPosition, setRandomPosition] = useState({ x: 50, y: 50 });
   const [imageLoaded, setImageLoaded] = useState(false);
-  //const [isClient, setIsClient] = useState(false);
 
   // This ensures we only run on the client
   useEffect(() => {
@@ -51,9 +50,9 @@ const images = [
       x: 20 + Math.random() * 60,
       y: 20 + Math.random() * 60
     });
-  }, [currentImageIndex]);
+  }, [currentImageIndex, mounted]);
 
-  const handlePasswordSubmit = (e) => {
+  const handlePasswordSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Change 'ourdate' to whatever password you want
     if (password === '01092025') {
@@ -95,8 +94,8 @@ const images = [
           <input
             type="password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            onKeyPress={(e) => {
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
+            onKeyPress={(e: React.KeyboardEvent<HTMLInputElement>) => {
               if (e.key === 'Enter') {
                 handlePasswordSubmit(e);
               }
@@ -128,7 +127,7 @@ const images = [
     <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 flex items-center justify-center p-4">
       <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-lg w-full">
         <h1 className="text-3xl font-bold text-center mb-2">Memories</h1>
-        <p className="text-gray-600 text-center mb-6"></p>
+        <p className="text-gray-600 text-center mb-6">6 months wow</p>
 
         <div className="relative mb-6 bg-gray-100 rounded-xl overflow-hidden h-96">
           {!imageLoaded && (

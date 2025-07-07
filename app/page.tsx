@@ -4,14 +4,21 @@ import { useState, useEffect } from 'react';
 
 export default function Home() {
   // Just replace these URLs with your image URLs
-  const images = [
-    { url: 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=800', caption: 'First date' },
-    { url: 'https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?w=800', caption: 'Sunset' },
-    { url: 'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=800', caption: 'Our spot' },
-    { url: 'https://images.unsplash.com/photo-1522199755839-a2bacb67c546?w=800', caption: 'Coffee' },
-    { url: 'https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?w=800', caption: 'Adventure' },
-    { url: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800', caption: '6 months' },
-  ];
+const images = [
+  { 
+    url: '/images/image1.jpg',  // Note: starts with / not ./
+    caption: 'First Date' 
+  },
+  { 
+    url: '/images/image2.jpg', 
+    caption: 'My 500 lbs Life' 
+  },
+  { 
+    url: '/images/image3.jpg', 
+    caption: 'Beach Day' 
+  },
+  // ... more images
+];
 
   const [mounted, setMounted] = useState(false);
   const [authenticated, setAuthenticated] = useState(false);

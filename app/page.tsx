@@ -7,15 +7,39 @@ export default function Home() {
   const originalImages = [
     { 
       url: '/images/image1.jpg',
-      caption: 'First Date' 
+      caption: 'First Date!' 
     },
     { 
       url: '/images/image2.jpg', 
-      caption: 'My 500 lbs Life' 
+      caption: 'My 500 lbs Life!' 
     },
     { 
-      url: '/images/image3.jpg', 
-      caption: 'Beach Day' 
+      url: '/images/image3.JPG', 
+      caption: 'Beach Day!' 
+    },
+    { 
+      url: '/images/image4.jpg', 
+      caption: 'always hitting my starfish :(' 
+    },
+    { 
+      url: '/images/image5.JPG', 
+      caption: 'Your Birthday!' 
+    },
+    { 
+      url: '/images/image6.jpg', 
+      caption: 'just wow' 
+    },
+    { 
+      url: '/images/image7.PNG', 
+      caption: 'just wow' 
+    },
+    { 
+      url: '/images/image8.jpg', 
+      caption: 'kind of random but u just look so elegant here and always' 
+    },
+    { 
+      url: '/images/image9.jpg', 
+      caption: 'Prom! you looked really amazing in this dress!' 
     },
     // ... more images
   ];
@@ -159,8 +183,7 @@ const handleNextImage = () => {
             )}
             
             <img
-              key={`${currentImageIndex}-${Date.now()}`}  // CHANGE THIS LINE
-              src={`${images[currentImageIndex].url}?t=${Date.now()}`}  // CHANGE THIS LINE
+              src={`${images[currentImageIndex].url}?t=${Date.now()}`}  
               alt="Memory"
               className="w-full h-full object-cover transition-all duration-700"
               style={{ 
@@ -169,11 +192,11 @@ const handleNextImage = () => {
                 opacity: imageLoaded ? 1 : 0
               }}
               onLoad={() => setImageLoaded(true)}
-              onError={() => setImageLoaded(true)}  // ADD THIS LINE
+              onError={() => setImageLoaded(true)}  
             />
 
             {/* Elegant gradient overlay for caption */}
-            <div className={`absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent h-32 transition-opacity duration-700 ${(isRevealed || currentZoom >= 80) ? 'opacity-100' : 'opacity-0'}`}>
+            <div className={`absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent h-32 transition-opacity duration-100 ${(isRevealed || currentZoom >= 80) ? 'opacity-100' : 'opacity-0'}`}>
               <p className="absolute bottom-6 left-0 right-0 text-white text-center font-light text-lg tracking-wide px-6">
                 {images[currentImageIndex].caption}
               </p>

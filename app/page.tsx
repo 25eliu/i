@@ -29,7 +29,7 @@ const images = [
   const [isRevealed, setIsRevealed] = useState(false);
   const [randomPosition, setRandomPosition] = useState({ x: 50, y: 50 });
   const [imageLoaded, setImageLoaded] = useState(false);
-  const [isClient, setIsClient] = useState(false);
+  //const [isClient, setIsClient] = useState(false);
 
   // This ensures we only run on the client
   useEffect(() => {
@@ -127,8 +127,8 @@ const images = [
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 flex items-center justify-center p-4">
       <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-lg w-full">
-        <h1 className="text-3xl font-bold text-center mb-2">Memory Game</h1>
-        <p className="text-gray-600 text-center mb-6">Can you guess the memory?</p>
+        <h1 className="text-3xl font-bold text-center mb-2">Memories</h1>
+        <p className="text-gray-600 text-center mb-6"></p>
 
         <div className="relative mb-6 bg-gray-100 rounded-xl overflow-hidden h-96">
           {!imageLoaded && (

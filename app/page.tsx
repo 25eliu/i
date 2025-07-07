@@ -3,10 +3,10 @@
 import { useState, useEffect } from 'react';
 
 export default function Home() {
-  // Just replace these URLs with your image URLs
-  const images = [
+  // Your image URLs
+  const originalImages = [
     { 
-      url: '/images/image1.jpg',  // Note: starts with / not ./
+      url: '/images/image1.jpg',
       caption: 'First Date' 
     },
     { 
@@ -20,6 +20,7 @@ export default function Home() {
     // ... more images
   ];
 
+  const [images, setImages] = useState(originalImages);
   const [mounted, setMounted] = useState(false);
   const [authenticated, setAuthenticated] = useState(false);
   const [password, setPassword] = useState('');
@@ -29,11 +30,15 @@ export default function Home() {
   const [isRevealed, setIsRevealed] = useState(false);
   const [randomPosition, setRandomPosition] = useState({ x: 50, y: 50 });
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
-  // This ensures we only run on the client
+  // Shuffle images on mount
   useEffect(() => {
     setMounted(true);
-    // Set initial random position only on client
+    // Shuffle the images randomly
+    const shuffled = [...originalImages].sort(() => Math.random() - 0.5);
+    setImages(shuffled);
+    // Set initial random position
     setRandomPosition({
       x: 20 + Math.random() * 60,
       y: 20 + Math.random() * 60
@@ -46,6 +51,7 @@ export default function Home() {
     setIsRevealed(false);
     setCurrentZoom(15);
     setImageLoaded(false);
+    setIsTransitioning(false);
     setRandomPosition({
       x: 20 + Math.random() * 60,
       y: 20 + Math.random() * 60
@@ -54,16 +60,27 @@ export default function Home() {
 
   const handlePasswordSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Change 'ourdate' to whatever password you want
     if (password === '01092025') {
       setAuthenticated(true);
       setShowError(false);
     } else {
       setShowError(true);
       setPassword('');
+      // Clear error after 2 seconds
+      setTimeout(() => setShowError(false), 2000);
     }
   };
 
+const handleNextImage = () => {
+    setIsTransitioning(true);
+    setTimeout(() => {
+      const nextIndex = (currentImageIndex + 1) % images.length;
+      setCurrentImageIndex(nextIndex);
+      setIsTransitioning(false);
+      // Reset imageLoaded to false so onLoad triggers again
+      setImageLoaded(false);
+    }, 300);
+  };
   const getClipPath = () => {
     if (isRevealed || !imageLoaded || !mounted) return 'none';
     const size = currentZoom;
@@ -75,7 +92,6 @@ export default function Home() {
     return `polygon(${left}% ${top}%, ${right}% ${top}%, ${right}% ${bottom}%, ${left}% ${bottom}%)`;
   };
 
-  // Don't render until client-side
   if (!mounted) {
     return null;
   }
@@ -83,12 +99,12 @@ export default function Home() {
   // Password screen
   if (!authenticated) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 flex items-center justify-center p-4">
-        <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-sm w-full">
-          <div className="text-center mb-6">
-            <div className="text-4xl mb-4">🔒</div>
-            <h2 className="text-2xl font-bold text-gray-800 mb-2">Enter Password</h2>
-            <p className="text-gray-600 text-sm">when</p>
+      <div className="min-h-screen bg-gradient-to-br from-pink-50 via-purple-50 to-indigo-100 flex items-center justify-center p-4">
+        <div className="bg-white/80 backdrop-blur-lg rounded-3xl shadow-xl p-10 max-w-md w-full transform transition-all duration-500 hover:scale-[1.02]">
+          <div className="text-center mb-8">
+            <div className="text-5xl mb-4 animate-pulse">💝</div>
+            <h2 className="text-3xl font-light text-gray-800 mb-3">Our Memories</h2>
+            <p className="text-gray-500 text-sm font-light">Enter our special date to continue</p>
           </div>
           
           <input
@@ -100,20 +116,20 @@ export default function Home() {
                 handlePasswordSubmit(e);
               }
             }}
-            placeholder="Enter password..."
-            className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none transition mb-4"
+            placeholder="MMDDYYYY"
+            className={`w-full p-4 border-2 ${showError ? 'border-red-300' : 'border-gray-200'} rounded-2xl focus:border-purple-400 focus:outline-none transition-all duration-300 text-center text-lg font-light tracking-wider`}
             autoFocus
           />
           
-          {showError && (
-            <p className="text-red-500 text-sm text-center mb-4">
-              Incorrect password. Try again! 💕
+          <div className={`h-6 mt-2 transition-all duration-300 ${showError ? 'opacity-100' : 'opacity-0'}`}>
+            <p className="text-red-400 text-sm text-center font-light">
+              Not quite right, try again 💕
             </p>
-          )}
+          </div>
           
           <button
             onClick={handlePasswordSubmit}
-            className="w-full bg-gradient-to-r from-blue-500 to-indigo-500 text-white font-medium py-3 rounded-lg hover:shadow-lg transition"
+            className="w-full bg-gradient-to-r from-purple-400 to-pink-400 text-white font-light py-4 rounded-2xl hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-300 text-lg tracking-wide mt-4"
           >
             Enter
           </button>
@@ -124,69 +140,103 @@ export default function Home() {
 
   // Main game
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 flex items-center justify-center p-4">
-      <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-lg w-full">
-        <h1 className="text-3xl font-bold text-center mb-2">Memories</h1>
-        <p className="text-gray-600 text-center mb-6">6 months wow</p>
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-indigo-100 flex items-center justify-center p-4">
+      <div className="bg-white/90 backdrop-blur-md rounded-3xl shadow-2xl p-8 max-w-2xl w-full">
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-light text-gray-800 mb-2 tracking-wide">Memories</h1>
+          <p className="text-gray-500 font-light">Six months! :D</p>
+        </div>
 
-        <div className="relative mb-6 bg-gray-100 rounded-xl overflow-hidden h-96">
-          {!imageLoaded && (
-            <div className="absolute inset-0 flex items-center justify-center">
-              <p className="text-gray-500">Loading...</p>
+        <div className={`relative mb-8 rounded-2xl overflow-hidden shadow-lg transition-all duration-500 ${isTransitioning ? 'scale-95 opacity-50' : 'scale-100 opacity-100'}`} style={{ height: '500px' }}>
+          <div className="absolute inset-0 bg-gradient-to-br from-purple-100 to-pink-100">
+            {!imageLoaded && (
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="text-center">
+                  <div className="w-12 h-12 border-3 border-purple-300 border-t-transparent rounded-full animate-spin mb-4 mx-auto"></div>
+                  <p className="text-gray-400 font-light">Loading memory...</p>
+                </div>
+              </div>
+            )}
+            
+            <img
+              key={`${currentImageIndex}-${Date.now()}`}  // CHANGE THIS LINE
+              src={`${images[currentImageIndex].url}?t=${Date.now()}`}  // CHANGE THIS LINE
+              alt="Memory"
+              className="w-full h-full object-cover transition-all duration-700"
+              style={{ 
+                clipPath: getClipPath(),
+                filter: imageLoaded ? 'none' : 'blur(20px)',
+                opacity: imageLoaded ? 1 : 0
+              }}
+              onLoad={() => setImageLoaded(true)}
+              onError={() => setImageLoaded(true)}  // ADD THIS LINE
+            />
+
+            {/* Elegant gradient overlay for caption */}
+            <div className={`absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent h-32 transition-opacity duration-700 ${(isRevealed || currentZoom >= 80) ? 'opacity-100' : 'opacity-0'}`}>
+              <p className="absolute bottom-6 left-0 right-0 text-white text-center font-light text-lg tracking-wide px-6">
+                {images[currentImageIndex].caption}
+              </p>
             </div>
-          )}
-          
-          <img
-            src={images[currentImageIndex].url}
-            alt="Memory"
-            className="w-full h-full object-cover"
-            style={{ clipPath: getClipPath() }}
-            onLoad={() => setImageLoaded(true)}
-          />
 
-          {(isRevealed || currentZoom >= 80) && (
-            <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 p-3">
-              <p className="text-white text-center">{images[currentImageIndex].caption}</p>
+            {/* Progress indicator */}
+            <div className="absolute top-6 right-6">
+              {/* <div className="bg-black/20 backdrop-blur-sm text-white px-4 py-2 rounded-full text-sm font-light">
+                {currentImageIndex + 1} of {images.length}
+              </div> */}
             </div>
-          )}
-
-          <div className="absolute top-4 right-4 bg-black bg-opacity-50 text-white px-3 py-1 rounded-full text-sm">
-            {currentImageIndex + 1} / {images.length}
           </div>
         </div>
 
-        <div className="space-y-3">
-          <div className="grid grid-cols-2 gap-3">
+        {/* Controls */}
+        <div className="space-y-4">
+          <div className="grid grid-cols-2 gap-4">
             <button
               onClick={() => !isRevealed && currentZoom < 100 && setCurrentZoom(Math.min(100, currentZoom + 20))}
               disabled={isRevealed || currentZoom >= 100}
-              className="bg-blue-500 hover:bg-blue-600 disabled:bg-gray-300 text-white font-medium py-3 rounded-lg transition disabled:cursor-not-allowed"
+              className="group relative overflow-hidden bg-gradient-to-r from-purple-400 to-purple-500 disabled:from-gray-300 disabled:to-gray-400 text-white font-light py-4 rounded-2xl transition-all duration-300 disabled:cursor-not-allowed"
             >
-              Zoom Out
+              <span className="relative z-10">Reveal More</span>
+              <div className="absolute inset-0 bg-white/20 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300"></div>
             </button>
             
             <button
               onClick={() => setIsRevealed(!isRevealed)}
-              className={`${isRevealed ? 'bg-orange-500 hover:bg-orange-600' : 'bg-green-500 hover:bg-green-600'} text-white font-medium py-3 rounded-lg transition`}
+              className={`group relative overflow-hidden ${isRevealed ? 'bg-gradient-to-r from-pink-400 to-rose-400' : 'bg-gradient-to-r from-green-400 to-emerald-400'} text-white font-light py-4 rounded-2xl transition-all duration-300`}
             >
-              {isRevealed ? 'Hide' : 'Reveal'}
+              <span className="relative z-10">{isRevealed ? 'Hide' : 'Peek'}</span>
+              <div className="absolute inset-0 bg-white/20 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300"></div>
             </button>
           </div>
           
           <button
-            onClick={() => setCurrentImageIndex((prev) => (prev + 1) % images.length)}
-            className="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-medium py-3 rounded-lg transition"
+            onClick={handleNextImage}
+            className="group w-full relative overflow-hidden bg-gradient-to-r from-indigo-400 to-purple-400 text-white font-light py-4 rounded-2xl transition-all duration-300"
           >
-            Next →
+            <span className="relative z-10 flex items-center justify-center gap-2">
+              Next
+              <span className="transform group-hover:translate-x-1 transition-transform duration-300">→</span>
+            </span>
+            <div className="absolute inset-0 bg-white/20 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300"></div>
           </button>
         </div>
 
-        <div className="mt-4">
-          <div className="bg-gray-200 rounded-full h-2 overflow-hidden">
-            <div className="bg-gradient-to-r from-blue-500 to-indigo-500 h-full transition-all duration-300" style={{ width: `${currentZoom}%` }} />
+        {/* Elegant progress bar */}
+        {/* <div className="mt-8">
+          <div className="relative h-1.5 bg-gray-200 rounded-full overflow-hidden">
+            <div 
+              className="absolute inset-y-0 left-0 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full transition-all duration-700 ease-out"
+              style={{ width: `${currentZoom}%` }}
+            >
+              <div className="absolute right-0 top-1/2 transform translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full shadow-md"></div>
+            </div>
           </div>
-          <p className="text-center text-sm text-gray-600 mt-2">{currentZoom}% revealed</p>
-        </div>
+          <div className="flex justify-between mt-2">
+            <p className="text-sm text-gray-400 font-light">Hidden</p>
+            <p className="text-sm text-gray-600 font-light">{currentZoom}% revealed</p>
+            <p className="text-sm text-gray-400 font-light">Revealed</p>
+          </div>
+        </div> */}
       </div>
     </div>
   );

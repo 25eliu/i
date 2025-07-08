@@ -127,8 +127,8 @@ const handleNextImage = () => {
         <div className="bg-white/80 backdrop-blur-lg rounded-3xl shadow-xl p-10 max-w-md w-full transform transition-all duration-500 hover:scale-[1.02]">
           <div className="text-center mb-8">
             <div className="text-5xl mb-4 animate-pulse">💝</div>
-            <h2 className="text-3xl font-light text-gray-800 mb-3">Our Memories</h2>
-            <p className="text-gray-500 text-sm font-light">Enter our special date to continue</p>
+            <h2 className="text-3xl font-light text-gray-800 mb-3">E+I</h2>
+            <p className="text-gray-500 text-sm font-light">Date</p>
           </div>
           
           <input
@@ -171,7 +171,7 @@ const handleNextImage = () => {
           <p className="text-gray-500 font-light">Six months! :D</p>
         </div>
 
-        <div className={`relative mb-8 rounded-2xl overflow-hidden shadow-lg transition-all duration-500 ${isTransitioning ? 'scale-95 opacity-50' : 'scale-100 opacity-100'}`} style={{ height: '500px' }}>
+        <div className={`relative mb-8 rounded-2xl overflow-hidden shadow-lg transition-all duration-500 ${isTransitioning ? 'scale-95 opacity-50' : 'scale-100 opacity-100'}`} style={{ height: '400px', maxHeight: '50vh' }}>
           <div className="absolute inset-0 bg-gradient-to-br from-purple-100 to-pink-100">
             {!imageLoaded && (
               <div className="absolute inset-0 flex items-center justify-center">

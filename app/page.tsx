@@ -379,19 +379,21 @@ const handleNextImage = () => {
               onError={() => setImageLoaded(true)}  
             />
 
-            {/* Elegant gradient overlay for caption */}
-            <div className={`absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent h-32 transition-opacity duration-100 ${(isRevealed || currentZoom >= 80) ? 'opacity-100' : 'opacity-0'}`}>
-              <p className="absolute bottom-6 left-0 right-0 text-white text-center font-light text-lg tracking-wide px-6">
-                {images[currentImageIndex].caption}
-              </p>
-            </div>
-
             {/* Progress indicator */}
             <div className="absolute top-6 right-6">
               {/* <div className="bg-black/20 backdrop-blur-sm text-white px-4 py-2 rounded-full text-sm font-light">
                 {currentImageIndex + 1} of {images.length}
               </div> */}
             </div>
+          </div>
+        </div>
+
+        {/* Caption box below image */}
+        <div className={`mb-6 transition-all duration-300 ${(isRevealed || currentZoom >= 80) ? 'opacity-100 transform translate-y-0' : 'opacity-0 transform -translate-y-4'}`}>
+          <div className="bg-white/60 backdrop-blur-sm rounded-xl p-4 shadow-md">
+            <p className="text-gray-800 text-center font-medium text-sm leading-relaxed">
+              {images[currentImageIndex].caption}
+            </p>
           </div>
         </div>
 
@@ -427,23 +429,6 @@ const handleNextImage = () => {
             <div className="absolute inset-0 bg-white/20 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300"></div>
           </button>
         </div>
-
-        {/* Elegant progress bar */}
-        {/* <div className="mt-8">
-          <div className="relative h-1.5 bg-gray-200 rounded-full overflow-hidden">
-            <div 
-              className="absolute inset-y-0 left-0 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full transition-all duration-700 ease-out"
-              style={{ width: `${currentZoom}%` }}
-            >
-              <div className="absolute right-0 top-1/2 transform translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full shadow-md"></div>
-            </div>
-          </div>
-          <div className="flex justify-between mt-2">
-            <p className="text-sm text-gray-400 font-light">Hidden</p>
-            <p className="text-sm text-gray-600 font-light">{currentZoom}% revealed</p>
-            <p className="text-sm text-gray-400 font-light">Revealed</p>
-          </div>
-        </div> */}
       </div>
     </div>
   );

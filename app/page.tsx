@@ -1,21 +1,27 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { Quicksand } from 'next/font/google';
+
+const quicksand = Quicksand({ 
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700']
+});
 
 export default function Home() {
   // Your image URLs
   const originalImages = [
     { 
       url: '/images/image1.jpg',
-      caption: 'First Date!' 
+      caption: "First Date! If you didn't dm me like 8 months ago none of this would have happened. Thank you for going on that date w me and paying for the ice skating :). This has genuinely been some of the best 6 months of my life." 
     },
     { 
       url: '/images/image2.jpg', 
-      caption: 'My 500 lbs Life!' 
+      caption: "My 500 lbs Life! It's crazy how you're about to work here and I really wanna go to PJ with you more, not just because I like working out but it would be cool to have spending time with you in my daily routine." 
     },
     { 
       url: '/images/image3.JPG', 
-      caption: 'Beach Day!' 
+      caption: 'Beach Day! We definetly need to hit the beach again this summer and this day was a lot of fun. Also this picture of you smiling super cute.' 
     },
     { 
       url: '/images/image4.jpg', 
@@ -23,7 +29,7 @@ export default function Home() {
     },
     { 
       url: '/images/image5.JPG', 
-      caption: 'Your Birthday!' 
+      caption: 'Your Birthday! Thank you for inviting me to your lil birthday celebration. It was really funny to meet gordon and PRETEND to be yk.' 
     },
     { 
       url: '/images/image6.jpg', 
@@ -31,7 +37,7 @@ export default function Home() {
     },
     { 
       url: '/images/image7.PNG', 
-      caption: 'just wow' 
+      caption: "Such a good pfp, your smile is amazing and I love how you look in this picture."
     },
     { 
       url: '/images/image8.jpg', 
@@ -39,8 +45,186 @@ export default function Home() {
     },
     { 
       url: '/images/image9.jpg', 
-      caption: 'Prom! you looked really amazing in this dress!' 
+      caption: "Prom(Anthony's house edition)! you looked really amazing in this dress btw and thanks for putting up with going to a school's dance where you knew nobody. I feel like you go out of your way for me a lot and I really appreciate it. (and you don't have to)"
     },
+    { 
+      url: '/images/image10.jpg', 
+      caption: 'your lil RBF!dw you look intimdating at first but you are actually the sweetest person ever and I hope your new friends and people you meet will see that too.' 
+    },
+    { 
+      url: '/images/image11.jpg', 
+      caption: "The classic park across from the library. I like that jacket on you and i'm gonna miss spending time with you here" 
+    },
+    { 
+      url: '/images/image13.jpg', 
+      caption: "Your comfy ass bed! My teddy is so much better than that fatass bear. " 
+    },
+    {
+      url: '/images/image14.jpg',
+      caption: "Valentines Day! That was the first time i made flowers for anyone and im happy it was for you."
+    },
+        {
+      url: '/images/image15.JPG',
+      caption: "idk random cute photo. I hope you like this lil game that i made. "
+    },
+        {
+      url: '/images/image16.JPG',
+      caption: "yo my skin was so much worse in this photo. anyways i truly feel lucky everyday that i get to spend time with you"
+    },
+        {
+      url: '/images/image17.JPG',
+      caption: "ig story classic, i just noticed how weird ur elbow looks in this photo, but u look cute tho :)"
+    },
+        {
+      url: '/images/image18.jpg',
+      caption: "Academy of Science Date! whoah this was so long ago, thank you for this and many more amazing suggestions/ideas"
+    },
+        {
+      url: '/images/image19.jpg',
+      caption: "this doesnt even need a caption tbh"
+    },
+        {
+      url: '/images/image20.jpg',
+      caption: "One of my fav mirror photos of us, i feel like we look good together, ngl u carry"
+    },
+        {
+      url: '/images/image21.jpg',
+      caption: "tuff fit, also this sounds stupid but like when u get a little upset or banter when i ragebait you"
+    },
+        {
+      url: '/images/image22.jpg',
+      caption: "Seal Point! I love your hair :) and you also smell rly nice"
+    },
+        {
+      url: '/images/image23.jpg',
+      caption: "pjcc! I like how you went up even though you had your parka on (my bad). Thank you for joining me in my routine and hobbies and making it more fun."
+    },
+        {
+      url: '/images/image24.jpg',
+      caption: "laurens senior night! Ur genuinely such a good friend and supporter of others and its crazy how much you go out of your way to make others happy."
+    },
+        {
+      url: '/images/image25.jpg',
+      caption: "SMHS Prom! Ur a phone addict how do you always have it on in these photos lmao"
+    },
+        {
+      url: '/images/image26.JPG',
+      caption: "I really like this photo of us. u look super cute"
+    },
+        {
+      url: '/images/image27.jpg',
+      caption: "cuteeee"
+    },
+        {
+      url: '/images/image28.jpg',
+      caption: "I like our little arts and crafts adventures (even though im kinda suck), but ur good at it and always make it enjoyable"
+    },
+        {
+      url: '/images/image29.jpg',
+      caption: "AHS Prom (Andrews house edition)! Thank you for being super chill with my friends, its so nice being able to hangout w both you and them"
+    },
+        {
+      url: '/images/image30.JPG',
+      caption: "the recreation :D i like how ur always in like this silly and laughing mood doing the stupidest shit"
+    },
+    {
+      url: '/images/image31.jpg',
+      caption: "This day was rly fun for the most part, it was very mormon of us to go to the party and not drink and still have a good time"
+    },
+    {
+      url: '/images/image32.jpg',
+      caption: "Downtown if very nice even if its repeitive, I like how we can just walk around and talk about anything and everything"
+    },
+    {
+      url: '/images/image33.jpg',
+      caption: "idk wtf is going on but i really like how your always laughing at smthn stupid and i can be myself around you"
+    },
+    {
+      url: '/images/image34.jpg',
+      caption: "tissue strat (doesnt work i swear), also ur eyes are so pretty"
+    },
+        {
+      url: '/images/image35.jpg',
+      caption: "ur tail! i promise i wont become a furry at berk. but if i do u gotta join me"
+    },
+        {
+      url: '/images/image36.jpg',
+      caption: "crashing the date! i feel like we should be very proud of ourselves getting sanj and lauren together"
+    },
+    {
+      url: '/images/image37.png',
+      caption: "just wow"
+    },
+    {
+      url: '/images/image38.jpg',
+      caption: "this photo is amazing. cant believe they let u graduate tho.."
+    },
+    {
+      url: '/images/image39.jpg',
+      caption: "Thanks for inviting me! clueless look but in a cute way"
+    },
+    {
+      url: '/images/image40.JPG',
+      caption: "Addrienes crib! dont cry :( idk what to do when u do so ima just hug u. everything will be okay"
+    },
+        {
+      url: '/images/image41.jpg',
+      caption: "prob the best photobooth of us, also u storing everything from me is super sweet and caring"
+    },
+        {
+      url: '/images/image42.JPG',
+      caption: "so when r u gonna buy me this dress?"
+    },
+    {
+      url: '/images/image43.JPG',
+      caption: "honestly random thought but im just so happy i can be your boyfriend"
+    },
+    {
+      url: '/images/image44.PNG',
+      caption: "hehe, ill always prioritize u"
+    },
+    {
+      url: '/images/image45.jpg',
+      caption: "2 man! this was a fun day i cant wait for camping"
+    },
+    {
+      url: '/images/image46.jpg',
+      caption: "where it all began 2 years ago, so what are your swim times?"
+    },
+        {
+      url: '/images/image47.jpg',
+      caption: "someone doesnt know how to lie on a bed. i wanna cuddle w u while watching squid game so bad rn"
+    },
+        {
+      url: '/images/image48.jpg',
+      caption: "ur so cute, thanks for making everything ur around smell good btw"
+    },
+    {
+      url: '/images/image49.JPG',
+      caption: "Clay Date! amazing idea as usual, i love when u suggest something to do :), since u dont like picking options ill b the picker and u can be the suggester!"
+    },
+    {
+      url: '/images/image50.jpg',
+      caption: "random ass photo but i rly like how u match my vibe"
+    },
+    {
+      url: '/images/image51.JPG',
+      caption: "i stand by this"
+    },
+    
+    {
+      url: '/images/image52.JPG',
+      caption: "holy guacamole typea photo"
+    },
+    
+    {
+      url: '/images/image53.JPG',
+      caption: "a rising racist, i like how i can have no filter around u and vice veresa"
+    },
+    
+
+
+
     // ... more images
   ];
 
@@ -164,7 +348,7 @@ const handleNextImage = () => {
 
   // Main game
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-indigo-100 flex items-center justify-center p-4">
+    <div className={`${quicksand.className} min-h-screen bg-gradient-to-br from-pink-50 via-purple-50 to-indigo-100 flex items-center justify-center p-4`}>
       <div className="bg-white/90 backdrop-blur-md rounded-3xl shadow-2xl p-8 max-w-2xl w-full">
         <div className="text-center mb-8">
           <h1 className="text-4xl font-light text-gray-800 mb-2 tracking-wide">Memories</h1>

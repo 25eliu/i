@@ -112,7 +112,7 @@ export default function Home() {
       caption: "I really like this photo of us. u look super cute"
     },
         {
-      url: '/images/image27.jpg',
+      url: '/images/image27.JPG',
       caption: "cuteeee"
     },
         {
@@ -128,7 +128,7 @@ export default function Home() {
       caption: "the recreation :D i like how ur always in like this silly and laughing mood doing the stupidest shit"
     },
     {
-      url: '/images/image31.jpg',
+      url: '/images/image31.JPG',
       caption: "This day was rly fun for the most part, it was very mormon of us to go to the party and not drink and still have a good time"
     },
     {
@@ -172,7 +172,7 @@ export default function Home() {
       caption: "prob the best photobooth of us, also u storing everything from me is super sweet and caring"
     },
         {
-      url: '/images/image42.JPG',
+      url: '/images/image42.jpg',
       caption: "so when r u gonna buy me this dress?"
     },
     {
